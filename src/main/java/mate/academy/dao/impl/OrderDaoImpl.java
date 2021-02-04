@@ -1,10 +1,10 @@
 package mate.academy.dao.impl;
 
 import java.util.List;
-import mate.academy.dao.OrdersDao;
+import mate.academy.dao.OrderDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
-import mate.academy.model.Orders;
+import mate.academy.model.Order;
 import mate.academy.model.User;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
@@ -12,23 +12,23 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
-public class OrdersDaoImpl implements OrdersDao {
+public class OrderDaoImpl implements OrderDao {
     @Override
-    public Orders add(Orders orders) {
+    public Order add(Order order) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(orders);
+            session.save(order);
             transaction.commit();
-            return orders;
+            return order;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't insert order entity"
-                    + orders, e);
+                    + order, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -37,15 +37,15 @@ public class OrdersDaoImpl implements OrdersDao {
     }
 
     @Override
-    public List<Orders> getOrdersHistory(User user) {
+    public List<Order> getOrdersHistory(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Orders> getAllOrdersQuery = session.createQuery("from Orders o "
+            Query<Order> getAllOrdersQuery = session.createQuery("from Order o "
                     + "left join fetch o.tickets "
-                    + "where o.user = :user", Orders.class)
+                    + "where o.user = :user", Order.class)
                     .setParameter("user", user);
             return getAllOrdersQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving all orders by user: " + user, e);
+            throw new DataProcessingException("Error retrieving all order by user: " + user, e);
         }
     }
 }

@@ -5,17 +5,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import mate.academy.exception.AuthenticationException;
 import mate.academy.lib.Injector;
-import mate.academy.model.CinemaHall;
-import mate.academy.model.Movie;
-import mate.academy.model.MovieSession;
-import mate.academy.model.Orders;
-import mate.academy.model.ShoppingCart;
-import mate.academy.model.User;
+import mate.academy.model.*;
+import mate.academy.model.Order;
 import mate.academy.service.AuthenticationService;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
-import mate.academy.service.OrdersService;
+import mate.academy.service.OrderService;
 import mate.academy.service.ShoppingCartService;
 
 public class Main {
@@ -93,12 +89,12 @@ public class Main {
         ShoppingCart scByUser = shoppingCartService.getByUser(user);
         System.out.println(scByUser);
 
-        OrdersService ordersService = (OrdersService)
-                injector.getInstance(OrdersService.class);
+        OrderService orderService = (OrderService)
+                injector.getInstance(OrderService.class);
 
-        Orders orders = ordersService.completeOrder(scByUser);
-        System.out.println(orders);
+        Order order = orderService.completeOrder(scByUser);
+        System.out.println(order);
 
-        ordersService.getOrdersHistory(user).forEach(System.out::println);
+        orderService.getOrdersHistory(user).forEach(System.out::println);
     }
 }
