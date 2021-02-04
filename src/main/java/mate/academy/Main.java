@@ -8,12 +8,14 @@ import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
+import mate.academy.model.Orders;
 import mate.academy.model.ShoppingCart;
 import mate.academy.model.User;
 import mate.academy.service.AuthenticationService;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
+import mate.academy.service.OrdersService;
 import mate.academy.service.ShoppingCartService;
 
 public class Main {
@@ -25,7 +27,10 @@ public class Main {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious");
 
+        Movie avengers = new Movie();
+        avengers.setTitle("Avengers");
         movieService.add(movie);
+        movieService.add(avengers);
         movieService.getAll().forEach(System.out::println);
 
         CinemaHallService cinemaHallService = (CinemaHallService)
@@ -42,14 +47,25 @@ public class Main {
         movieSession.setCinemaHall(hall);
         movieSession.setShowTime(LocalDateTime.of(2021, 2, 1, 14, 0));
 
+        MovieSession avengersSession = new MovieSession();
+        avengersSession.setMovie(avengers);
+        avengersSession.setCinemaHall(hall);
+        avengersSession.setShowTime(LocalDateTime.of(2020, 3, 2, 21, 0));
         MovieSessionService movieSessionService = (MovieSessionService)
                 injector.getInstance(MovieSessionService.class);
 
         System.out.println(movieSessionService.add(movieSession));
+
         LocalDate localDate = LocalDate.of(2021, 2, 1);
         List<MovieSession> sessions =
                 movieSessionService.findAvailableSessions(movie.getId(), localDate);
         sessions.forEach(System.out::println);
+
+        movieSessionService.add(avengersSession);
+        List<MovieSession> sessionsForAvengers =
+                movieSessionService.findAvailableSessions(avengers.getId(),
+                        LocalDate.of(2020, 3, 2));
+        sessionsForAvengers.forEach(System.out::println);
 
         AuthenticationService authenticationService = (AuthenticationService)
                 injector.getInstance(AuthenticationService.class);
@@ -71,5 +87,18 @@ public class Main {
 
         shoppingCartService.clear(shoppingCart);
         System.out.println(shoppingCartService.getByUser(user));
+
+        shoppingCartService.addSession(avengersSession, user);
+        shoppingCartService.addSession(movieSession,user);
+        ShoppingCart scByUser = shoppingCartService.getByUser(user);
+        System.out.println(scByUser);
+
+        OrdersService ordersService = (OrdersService)
+                injector.getInstance(OrdersService.class);
+
+        Orders orders = ordersService.completeOrder(scByUser);
+        System.out.println(orders);
+
+        ordersService.getOrdersHistory(user).forEach(System.out::println);
     }
 }
