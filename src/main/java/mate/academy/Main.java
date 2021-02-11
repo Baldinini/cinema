@@ -3,8 +3,8 @@ package mate.academy;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import mate.academy.config.AppConfig;
 import mate.academy.exception.AuthenticationException;
-import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
@@ -17,12 +17,14 @@ import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 import mate.academy.service.OrderService;
 import mate.academy.service.ShoppingCartService;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
-    private static final Injector injector = Injector.getInstance("mate.academy");
+    private static final AnnotationConfigApplicationContext context =
+            new AnnotationConfigApplicationContext(AppConfig.class);
 
     public static void main(String[] args) throws AuthenticationException {
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
+        MovieService movieService = context.getBean(MovieService.class);
 
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious");
@@ -33,8 +35,7 @@ public class Main {
         movieService.add(avengers);
         movieService.getAll().forEach(System.out::println);
 
-        CinemaHallService cinemaHallService = (CinemaHallService)
-                injector.getInstance(CinemaHallService.class);
+        CinemaHallService cinemaHallService = context.getBean(CinemaHallService.class);
 
         CinemaHall hall = new CinemaHall();
         hall.setCapacity(50);
@@ -51,8 +52,7 @@ public class Main {
         avengersSession.setMovie(avengers);
         avengersSession.setCinemaHall(hall);
         avengersSession.setShowTime(LocalDateTime.of(2020, 3, 2, 21, 0));
-        MovieSessionService movieSessionService = (MovieSessionService)
-                injector.getInstance(MovieSessionService.class);
+        MovieSessionService movieSessionService = context.getBean(MovieSessionService.class);
 
         System.out.println(movieSessionService.add(movieSession));
 
@@ -67,16 +67,14 @@ public class Main {
                         LocalDate.of(2020, 3, 2));
         sessionsForAvengers.forEach(System.out::println);
 
-        AuthenticationService authenticationService = (AuthenticationService)
-                injector.getInstance(AuthenticationService.class);
+        AuthenticationService authenticationService = context.getBean(AuthenticationService.class);
         User user = authenticationService.register("abracadbra.com", "1234");
         System.out.println(user);
 
         User userLogin = authenticationService.login("abracadbra.com", "1234");
         System.out.println(userLogin);
 
-        ShoppingCartService shoppingCartService = (ShoppingCartService)
-                injector.getInstance(ShoppingCartService.class);
+        ShoppingCartService shoppingCartService = context.getBean(ShoppingCartService.class);
 
         ShoppingCart shoppingCartByUser = shoppingCartService.getByUser(user);
         System.out.println(shoppingCartByUser);
@@ -93,8 +91,7 @@ public class Main {
         ShoppingCart scByUser = shoppingCartService.getByUser(user);
         System.out.println(scByUser);
 
-        OrderService orderService = (OrderService)
-                injector.getInstance(OrderService.class);
+        OrderService orderService = context.getBean(OrderService.class);
 
         Order order = orderService.completeOrder(scByUser);
         System.out.println(order);
