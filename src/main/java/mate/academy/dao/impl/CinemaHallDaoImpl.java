@@ -3,21 +3,29 @@ package mate.academy.dao.impl;
 import java.util.List;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
-import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
-import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class CinemaHallDaoImpl implements CinemaHallDao {
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public CinemaHallDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Session session = null;
         Transaction transaction = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(cinemaHall);
             transaction.commit();
@@ -36,7 +44,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<CinemaHall> getAllCinemaHallQuery =
                     session.createQuery("from CinemaHall", CinemaHall.class);
             return getAllCinemaHallQuery.getResultList();

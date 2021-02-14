@@ -3,22 +3,30 @@ package mate.academy.dao.impl;
 import java.util.List;
 import mate.academy.dao.OrderDao;
 import mate.academy.exception.DataProcessingException;
-import mate.academy.lib.Dao;
 import mate.academy.model.Order;
 import mate.academy.model.User;
-import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class OrderDaoImpl implements OrderDao {
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public OrderDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public Order add(Order order) {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(order);
             transaction.commit();
@@ -38,7 +46,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getOrdersHistory(User user) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<Order> getAllOrdersQuery = session.createQuery("select distinct o "
                     + "from Order o "
                     + "left join fetch o.tickets "
