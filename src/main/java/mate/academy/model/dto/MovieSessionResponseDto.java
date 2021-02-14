@@ -1,4 +1,4 @@
-package mate.academy.dto.response;
+package mate.academy.model.dto;
 
 public class MovieSessionResponseDto {
     private Long id;

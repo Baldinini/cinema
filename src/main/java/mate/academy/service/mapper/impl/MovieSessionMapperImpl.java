@@ -1,13 +1,13 @@
-package mate.academy.mapper.impl;
+package mate.academy.service.mapper.impl;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import mate.academy.dto.request.MovieSessionRequestDto;
-import mate.academy.dto.response.MovieSessionResponseDto;
-import mate.academy.mapper.MovieSessionMapper;
 import mate.academy.model.MovieSession;
+import mate.academy.model.dto.MovieSessionRequestDto;
+import mate.academy.model.dto.MovieSessionResponseDto;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
+import mate.academy.service.mapper.MovieSessionMapper;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -36,8 +36,9 @@ public class MovieSessionMapperImpl implements MovieSessionMapper {
     public MovieSession convertToEntity(MovieSessionRequestDto movieSessionRequestDto) {
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(movieService.getById(movieSessionRequestDto.getMovieId()));
-        movieSession.setCinemaHall(cinemaHallService.getById(movieSessionRequestDto.getCinemaHallId()));
-        movieSession.setShowTime(LocalDateTime.parse(movieSessionRequestDto.getShowTime(), 
+        movieSession
+                .setCinemaHall(cinemaHallService.getById(movieSessionRequestDto.getCinemaHallId()));
+        movieSession.setShowTime(LocalDateTime.parse(movieSessionRequestDto.getShowTime(),
                 DateTimeFormatter.ofPattern(FORMATTER)));
         return movieSession;
     }

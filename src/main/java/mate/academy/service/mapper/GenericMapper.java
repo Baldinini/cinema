@@ -1,4 +1,4 @@
-package mate.academy.mapper;
+package mate.academy.service.mapper;
 
 public interface GenericMapper<I,T,K> {
     I convertToDto(T t);

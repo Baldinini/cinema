@@ -2,11 +2,11 @@ package mate.academy.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import mate.academy.dto.request.CinemaHallRequestDto;
-import mate.academy.dto.response.CinemaHallResponseDto;
-import mate.academy.mapper.CinemaHallMapper;
-import mate.academy.mapper.impl.CinemaHallMapperImpl;
+import mate.academy.model.dto.CinemaHallRequestDto;
+import mate.academy.model.dto.CinemaHallResponseDto;
 import mate.academy.service.CinemaHallService;
+import mate.academy.service.mapper.CinemaHallMapper;
+import mate.academy.service.mapper.impl.CinemaHallMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +21,8 @@ public class CinemaHallController {
     private final CinemaHallMapper cinemaHallMapper;
 
     @Autowired
-    public CinemaHallController(CinemaHallService cinemaHallService, CinemaHallMapperImpl cinemaHallMapper) {
+    public CinemaHallController(CinemaHallService cinemaHallService,
+                                CinemaHallMapperImpl cinemaHallMapper) {
         this.cinemaHallService = cinemaHallService;
         this.cinemaHallMapper = cinemaHallMapper;
     }

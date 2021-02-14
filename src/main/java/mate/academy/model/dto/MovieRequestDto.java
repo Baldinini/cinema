@@ -1,4 +1,4 @@
-package mate.academy.dto.request;
+package mate.academy.model.dto;
 
 public class MovieRequestDto {
     private Long id;
