@@ -8,6 +8,7 @@ import mate.academy.model.dto.MovieSessionResponseDto;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.mapper.MovieSessionMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,29 +17,30 @@ public class MovieSessionMapperImpl implements MovieSessionMapper {
     private final MovieService movieService;
     private final CinemaHallService cinemaHallService;
 
+    @Autowired
     public MovieSessionMapperImpl(MovieService movieService, CinemaHallService cinemaHallService) {
         this.movieService = movieService;
         this.cinemaHallService = cinemaHallService;
     }
 
     @Override
-    public MovieSessionResponseDto convertToDto(MovieSession movieSession) {
+    public MovieSessionResponseDto convertToDto(MovieSession entity) {
         MovieSessionResponseDto movieSessionDto = new MovieSessionResponseDto();
-        movieSessionDto.setId(movieSession.getId());
-        movieSessionDto.setMovieTitle(movieSession.getMovie().getTitle());
-        movieSessionDto.setCinemaHallId(movieSession.getCinemaHall().getId());
-        movieSessionDto.setShowTime(movieSession.getShowTime()
+        movieSessionDto.setId(entity.getId());
+        movieSessionDto.setMovieTitle(entity.getMovie().getTitle());
+        movieSessionDto.setCinemaHallId(entity.getCinemaHall().getId());
+        movieSessionDto.setShowTime(entity.getShowTime()
                 .format(DateTimeFormatter.ofPattern(FORMATTER)));
         return movieSessionDto;
     }
 
     @Override
-    public MovieSession convertToEntity(MovieSessionRequestDto movieSessionRequestDto) {
+    public MovieSession convertToEntity(MovieSessionRequestDto requestDto) {
         MovieSession movieSession = new MovieSession();
-        movieSession.setMovie(movieService.getById(movieSessionRequestDto.getMovieId()));
+        movieSession.setMovie(movieService.getById(requestDto.getMovieId()));
         movieSession
-                .setCinemaHall(cinemaHallService.getById(movieSessionRequestDto.getCinemaHallId()));
-        movieSession.setShowTime(LocalDateTime.parse(movieSessionRequestDto.getShowTime(),
+                .setCinemaHall(cinemaHallService.getById(requestDto.getCinemaHallId()));
+        movieSession.setShowTime(LocalDateTime.parse(requestDto.getShowTime(),
                 DateTimeFormatter.ofPattern(FORMATTER)));
         return movieSession;
     }

@@ -9,20 +9,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class MovieMapperImpl implements MovieMapper {
     @Override
-    public MovieResponseDto convertToDto(Movie movie) {
+    public MovieResponseDto convertToDto(Movie entity) {
         MovieResponseDto movieDto = new MovieResponseDto();
-        movieDto.setId(movie.getId());
-        movieDto.setTitle(movie.getTitle());
-        movieDto.setDescription(movie.getDescription());
+        movieDto.setId(entity.getId());
+        movieDto.setTitle(entity.getTitle());
+        movieDto.setDescription(entity.getDescription());
         return movieDto;
     }
 
     @Override
-    public Movie convertToEntity(MovieRequestDto movieRequestDto) {
+    public Movie convertToEntity(MovieRequestDto requestDto) {
         Movie movie = new Movie();
-        movie.setId(movieRequestDto.getId());
-        movie.setTitle(movieRequestDto.getTitle());
-        movie.setDescription(movieRequestDto.getDescription());
+        movie.setTitle(requestDto.getTitle());
+        movie.setDescription(requestDto.getDescription());
         return movie;
     }
 }
