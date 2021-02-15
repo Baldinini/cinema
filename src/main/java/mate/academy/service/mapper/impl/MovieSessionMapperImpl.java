@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MovieSessionMapperImpl implements MovieSessionMapper {
-    public static final String FORMATTER = "dd.MM.yyyy HH:mm";
+    private static final String FORMATTER = "dd.MM.yyyy HH:mm";
     private final MovieService movieService;
     private final CinemaHallService cinemaHallService;
 

@@ -2,7 +2,6 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.model.MovieSession;
@@ -85,33 +84,26 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public void delete(MovieSession movieSession) {
+    public void delete(Long id) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.delete(movieSession);
+            session.createQuery("delete from MovieSession where id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't delete movie session entity"
-                    + movieSession, e);
+            throw new DataProcessingException("Can't delete movie session entity by id: "
+                    + id, e);
         } finally {
             if (session != null) {
                 session.close();
             }
-        }
-    }
-
-    @Override
-    public Optional<MovieSession> getById(Long id) {
-        try (Session session = sessionFactory.openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
-        } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving movie session by id: " + id, e);
         }
     }
 }
