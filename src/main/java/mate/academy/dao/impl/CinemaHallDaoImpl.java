@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.model.CinemaHall;
@@ -50,6 +51,15 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             return getAllCinemaHallQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving all cinema halls", e);
+        }
+    }
+
+    @Override
+    public Optional<CinemaHall> getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.ofNullable(session.get(CinemaHall.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Error retrieving cinema hall by id: " + id, e);
         }
     }
 }

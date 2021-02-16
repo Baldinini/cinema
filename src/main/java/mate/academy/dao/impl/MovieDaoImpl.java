@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.model.Movie;
@@ -49,6 +50,15 @@ public class MovieDaoImpl implements MovieDao {
             return getAllMoviesQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving all movies", e);
+        }
+    }
+
+    @Override
+    public Optional<Movie> getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.ofNullable(session.get(Movie.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Error retrieving movie by id: " + id, e);
         }
     }
 }

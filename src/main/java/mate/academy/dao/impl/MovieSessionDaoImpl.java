@@ -60,4 +60,50 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + movieId + " on this date: " + date, e);
         }
     }
+
+    @Override
+    public void update(MovieSession movieSession) {
+        Transaction transaction = null;
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.update(movieSession);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataProcessingException("Can't update movie session entity"
+                    + movieSession, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Override
+    public void delete(Long id) {
+        Transaction transaction = null;
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.createQuery("delete from MovieSession where id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataProcessingException("Can't delete movie session entity by id: "
+                    + id, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
 }
