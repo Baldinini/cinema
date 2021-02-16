@@ -1,10 +1,10 @@
-package mate.academy.service.impl;
+package mate.academy.service.service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.model.MovieSession;
-import mate.academy.service.MovieSessionService;
+import mate.academy.service.service.MovieSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +35,10 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     @Override
     public void delete(Long id) {
         movieSessionDao.delete(id);
+    }
+
+    @Override
+    public MovieSession getById(Long id) {
+        return movieSessionDao.getById(id).get();
     }
 }

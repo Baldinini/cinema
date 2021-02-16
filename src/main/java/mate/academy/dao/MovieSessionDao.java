@@ -2,6 +2,7 @@ package mate.academy.dao;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import mate.academy.model.MovieSession;
 
 public interface MovieSessionDao {
@@ -12,4 +13,6 @@ public interface MovieSessionDao {
     void update(MovieSession movieSession);
 
     void delete(Long id);
+
+    Optional<MovieSession> getById(Long id);
 }

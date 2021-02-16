@@ -3,11 +3,11 @@ package mate.academy.service.mapper.impl;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import mate.academy.model.MovieSession;
-import mate.academy.model.dto.MovieSessionRequestDto;
-import mate.academy.model.dto.MovieSessionResponseDto;
-import mate.academy.service.CinemaHallService;
-import mate.academy.service.MovieService;
+import mate.academy.model.dto.request.MovieSessionRequestDto;
+import mate.academy.model.dto.response.MovieSessionResponseDto;
 import mate.academy.service.mapper.MovieSessionMapper;
+import mate.academy.service.service.CinemaHallService;
+import mate.academy.service.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

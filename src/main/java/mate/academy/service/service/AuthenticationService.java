@@ -1,4 +1,4 @@
-package mate.academy.service;
+package mate.academy.service.service;
 
 import mate.academy.exception.AuthenticationException;
 import mate.academy.model.User;

@@ -1,4 +1,4 @@
-package mate.academy.service.impl;
+package mate.academy.service.service.impl;
 
 import mate.academy.dao.ShoppingCartDao;
 import mate.academy.dao.TicketDao;
@@ -6,7 +6,7 @@ import mate.academy.model.MovieSession;
 import mate.academy.model.ShoppingCart;
 import mate.academy.model.Ticket;
 import mate.academy.model.User;
-import mate.academy.service.ShoppingCartService;
+import mate.academy.service.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

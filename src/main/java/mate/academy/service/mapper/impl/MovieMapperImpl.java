@@ -1,8 +1,8 @@
 package mate.academy.service.mapper.impl;
 
 import mate.academy.model.Movie;
-import mate.academy.model.dto.MovieRequestDto;
-import mate.academy.model.dto.MovieResponseDto;
+import mate.academy.model.dto.request.MovieRequestDto;
+import mate.academy.model.dto.response.MovieResponseDto;
 import mate.academy.service.mapper.MovieMapper;
 import org.springframework.stereotype.Component;
 

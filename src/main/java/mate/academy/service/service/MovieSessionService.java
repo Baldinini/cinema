@@ -1,4 +1,4 @@
-package mate.academy.service;
+package mate.academy.service.service;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,4 +12,6 @@ public interface MovieSessionService {
     void update(MovieSession movieSession);
 
     void delete(Long id);
+
+    MovieSession getById(Long id);
 }

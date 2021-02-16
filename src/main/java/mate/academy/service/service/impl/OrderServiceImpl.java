@@ -1,4 +1,4 @@
-package mate.academy.service.impl;
+package mate.academy.service.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,8 +7,8 @@ import mate.academy.dao.OrderDao;
 import mate.academy.model.Order;
 import mate.academy.model.ShoppingCart;
 import mate.academy.model.User;
-import mate.academy.service.OrderService;
-import mate.academy.service.ShoppingCartService;
+import mate.academy.service.service.OrderService;
+import mate.academy.service.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
