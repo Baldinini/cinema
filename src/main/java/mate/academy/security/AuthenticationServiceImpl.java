@@ -1,12 +1,8 @@
-package mate.academy.service.service.impl;
+package mate.academy.security;
 
-import java.util.Optional;
-import mate.academy.exception.AuthenticationException;
 import mate.academy.model.User;
-import mate.academy.service.service.AuthenticationService;
 import mate.academy.service.service.ShoppingCartService;
 import mate.academy.service.service.UserService;
-import mate.academy.util.HashUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,20 +16,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                                      ShoppingCartService shoppingCartService) {
         this.userService = userService;
         this.shoppingCartService = shoppingCartService;
-    }
-
-    @Override
-    public User login(String email, String password) throws AuthenticationException {
-        Optional<User> userByEmail = userService.findByEmail(email);
-        if (userByEmail.isPresent()) {
-            User user = userByEmail.get();
-            String hashPassword = HashUtil.hashPassword(password, user.getSalt());
-            if (hashPassword.equals(user.getPassword())) {
-                return user;
-            }
-        }
-        throw new AuthenticationException("Can't login by email: " + email
-                + " and password: " + password);
     }
 
     @Override

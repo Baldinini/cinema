@@ -4,25 +4,24 @@ import java.util.Optional;
 import mate.academy.dao.UserDao;
 import mate.academy.model.User;
 import mate.academy.service.service.UserService;
-import mate.academy.util.HashUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
+    private final PasswordEncoder encoder;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, PasswordEncoder encoder) {
         this.userDao = userDao;
+        this.encoder = encoder;
     }
 
     @Override
     public User add(User user) {
-        byte[] salt = HashUtil.getSalt();
-        String password = HashUtil.hashPassword(user.getPassword(), salt);
-        user.setPassword(password);
-        user.setSalt(salt);
+        user.setPassword(encoder.encode(user.getPassword()));
         return userDao.add(user);
     }
 

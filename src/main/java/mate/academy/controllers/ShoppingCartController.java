@@ -9,6 +9,8 @@ import mate.academy.service.service.MovieSessionService;
 import mate.academy.service.service.ShoppingCartService;
 import mate.academy.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,15 +37,20 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/movie-sessions")
-    public void addMovieSession(@RequestParam Long userId, @RequestParam Long movieSessionId) {
-        User user = userService.getById(userId);
+    public void addMovieSession(Authentication auth, @RequestParam Long movieSessionId) {
+        UserDetails principal = (UserDetails) auth.getPrincipal();
+        String email = principal.getUsername();
+        User user = userService.findByEmail(email).get();
         MovieSession movieSession = movieSessionService.getById(movieSessionId);
         shoppingCartService.addSession(movieSession, user);
     }
 
     @GetMapping("/by-user")
-    public ShoppingCartResponseDto getByUserId(@RequestParam Long userId) {
-        ShoppingCart shoppingCart = shoppingCartService.getByUser(userService.getById(userId));
+    public ShoppingCartResponseDto getByUserId(Authentication auth) {
+        UserDetails principal = (UserDetails) auth.getPrincipal();
+        String email = principal.getUsername();
+        ShoppingCart shoppingCart = shoppingCartService
+                .getByUser(userService.findByEmail(email).get());
         return mapper.convertToDto(shoppingCart);
     }
 }

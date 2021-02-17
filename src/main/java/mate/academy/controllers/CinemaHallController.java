@@ -2,6 +2,7 @@ package mate.academy.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import mate.academy.model.dto.request.CinemaHallRequestDto;
 import mate.academy.model.dto.response.CinemaHallResponseDto;
 import mate.academy.service.mapper.CinemaHallMapper;
@@ -27,7 +28,7 @@ public class CinemaHallController {
     }
 
     @PostMapping
-    public void addCinemaHall(@RequestBody CinemaHallRequestDto cinemaHallRequestDto) {
+    public void addCinemaHall(@RequestBody @Valid CinemaHallRequestDto cinemaHallRequestDto) {
         cinemaHallService.add(cinemaHallMapper.convertToEntity(cinemaHallRequestDto));
     }
 

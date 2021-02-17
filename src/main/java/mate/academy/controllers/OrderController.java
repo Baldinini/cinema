@@ -3,17 +3,17 @@ package mate.academy.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 import mate.academy.model.ShoppingCart;
-import mate.academy.model.User;
 import mate.academy.model.dto.response.OrderResponseDto;
 import mate.academy.service.mapper.OrderMapper;
 import mate.academy.service.service.OrderService;
 import mate.academy.service.service.ShoppingCartService;
 import mate.academy.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -36,15 +36,19 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    public void completeOrder(@RequestParam Long userId) {
-        ShoppingCart shoppingCart = shoppingCartService.getByUser(userService.getById(userId));
+    public void completeOrder(Authentication auth) {
+        UserDetails principal = (UserDetails) auth.getPrincipal();
+        String email = principal.getUsername();
+        ShoppingCart shoppingCart = shoppingCartService
+                .getByUser(userService.findByEmail(email).get());
         orderService.completeOrder(shoppingCart);
     }
 
     @GetMapping
-    public List<OrderResponseDto> getOrdersByUserId(@RequestParam Long userId) {
-        User user = userService.getById(userId);
-        return orderService.getOrdersHistory(user)
+    public List<OrderResponseDto> getOrdersByUserId(Authentication auth) {
+        UserDetails principal = (UserDetails) auth.getPrincipal();
+        String email = principal.getUsername();
+        return orderService.getOrdersHistory(userService.findByEmail(email).get())
                 .stream()
                 .map(orderMapper::convertToDto)
                 .collect(Collectors.toList());
