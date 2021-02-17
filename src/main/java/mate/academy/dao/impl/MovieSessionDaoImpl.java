@@ -2,6 +2,7 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.model.MovieSession;
@@ -49,7 +50,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> getAllMovieSessionsQuery =
                     session.createQuery("from MovieSession "
-                                    + "where id = :movieId "
+                                    + "where movie.id = :movieId "
                                     + "and date_format(showTime, '%Y-%m-%d') = :date",
                             MovieSession.class)
                             .setParameter("movieId", movieId)
@@ -104,6 +105,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (session != null) {
                 session.close();
             }
+        }
+    }
+
+    @Override
+    public Optional<MovieSession> getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.ofNullable(session.get(MovieSession.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get movie session by id: " + id, e);
         }
     }
 }

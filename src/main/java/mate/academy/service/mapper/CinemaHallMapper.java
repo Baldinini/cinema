@@ -1,9 +1,10 @@
 package mate.academy.service.mapper;
 
 import mate.academy.model.CinemaHall;
-import mate.academy.model.dto.CinemaHallRequestDto;
-import mate.academy.model.dto.CinemaHallResponseDto;
+import mate.academy.model.dto.request.CinemaHallRequestDto;
+import mate.academy.model.dto.response.CinemaHallResponseDto;
 
 public interface CinemaHallMapper extends
-        GenericMapper<CinemaHallResponseDto, CinemaHall, CinemaHallRequestDto> {
+        GenericMapperEntityToResponse<CinemaHall, CinemaHallResponseDto>,
+        GenericMapperRequestToEntity<CinemaHallRequestDto, CinemaHall> {
 }

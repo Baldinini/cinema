@@ -1,4 +1,4 @@
-package mate.academy.model.dto;
+package mate.academy.model.dto.request;
 
 public class CinemaHallRequestDto {
     private int capacity;

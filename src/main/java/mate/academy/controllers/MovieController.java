@@ -2,10 +2,10 @@ package mate.academy.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import mate.academy.model.dto.MovieRequestDto;
-import mate.academy.model.dto.MovieResponseDto;
-import mate.academy.service.MovieService;
+import mate.academy.model.dto.request.MovieRequestDto;
+import mate.academy.model.dto.response.MovieResponseDto;
 import mate.academy.service.mapper.MovieMapper;
+import mate.academy.service.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

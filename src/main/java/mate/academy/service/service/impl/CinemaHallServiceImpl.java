@@ -1,9 +1,9 @@
-package mate.academy.service.impl;
+package mate.academy.service.service.impl;
 
 import java.util.List;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.model.CinemaHall;
-import mate.academy.service.CinemaHallService;
+import mate.academy.service.service.CinemaHallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

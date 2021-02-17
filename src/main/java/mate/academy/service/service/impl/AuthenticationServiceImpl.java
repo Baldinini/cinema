@@ -1,11 +1,11 @@
-package mate.academy.service.impl;
+package mate.academy.service.service.impl;
 
 import java.util.Optional;
 import mate.academy.exception.AuthenticationException;
 import mate.academy.model.User;
-import mate.academy.service.AuthenticationService;
-import mate.academy.service.ShoppingCartService;
-import mate.academy.service.UserService;
+import mate.academy.service.service.AuthenticationService;
+import mate.academy.service.service.ShoppingCartService;
+import mate.academy.service.service.UserService;
 import mate.academy.util.HashUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
