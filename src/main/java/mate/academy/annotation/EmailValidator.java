@@ -3,12 +3,8 @@ package mate.academy.annotation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class EmailValidationConstrain implements ConstraintValidator<EmailValidation, String> {
+public class EmailValidator implements ConstraintValidator<EmailValidation, String> {
     public static final String REGEX = "[a-zA-Z]+";
-
-    @Override
-    public void initialize(EmailValidation constraintAnnotation) {
-    }
 
     @Override
     public boolean isValid(String contactField,
