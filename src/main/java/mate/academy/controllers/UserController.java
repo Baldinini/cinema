@@ -16,7 +16,7 @@ public class UserController {
     private final UserMapper mapper;
 
     @Autowired
-    public UserController(UserService userService,UserMapper mapper) {
+    public UserController(UserService userService, UserMapper mapper) {
         this.userService = userService;
         this.mapper = mapper;
     }
