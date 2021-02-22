@@ -6,20 +6,16 @@ import mate.academy.model.Role;
 import mate.academy.model.User;
 import mate.academy.service.service.RoleService;
 import mate.academy.service.service.UserService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DataInitializer {
     private final RoleService roleService;
     private final UserService userService;
-    private final PasswordEncoder encoder;
 
-    public DataInitializer(RoleService roleService,
-                           UserService userService, PasswordEncoder encoder) {
+    public DataInitializer(RoleService roleService, UserService userService) {
         this.roleService = roleService;
         this.userService = userService;
-        this.encoder = encoder;
     }
 
     @PostConstruct
