@@ -31,7 +31,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User register(String email, String password) {
         User user = new User();
-        user.setPassword(encoder.encode(password));
+        user.setPassword(password);
         user.setEmail(email);
         Role role = roleService.getRoleByName("USER");
         user.setRoles(Set.of(role));

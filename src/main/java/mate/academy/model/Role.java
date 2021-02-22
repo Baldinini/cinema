@@ -32,17 +32,7 @@ public class Role {
     }
 
     public enum RoleName {
-        USER("USER"),
-        ADMIN("ADMIN");
-
-        private final String roleName;
-
-        private RoleName(String roleName) {
-            this.roleName = roleName;
-        }
-
-        public String toString() {
-            return this.roleName;
-        }
+        USER,
+        ADMIN
     }
 }

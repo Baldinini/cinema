@@ -7,16 +7,16 @@ import mate.academy.model.User;
 import mate.academy.service.service.RoleService;
 import mate.academy.service.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
-@Controller
-public class InjectController {
+@Component
+public class DataInitializer {
     private final RoleService roleService;
     private final UserService userService;
     private final PasswordEncoder encoder;
 
-    public InjectController(RoleService roleService,
-                            UserService userService, PasswordEncoder encoder) {
+    public DataInitializer(RoleService roleService,
+                           UserService userService, PasswordEncoder encoder) {
         this.roleService = roleService;
         this.userService = userService;
         this.encoder = encoder;
@@ -32,7 +32,7 @@ public class InjectController {
         roleService.add(roleUser);
         User admin = new User();
         admin.setEmail("Admin");
-        admin.setPassword(encoder.encode("1234"));
+        admin.setPassword("1234");
         admin.setRoles(Set.of(roleAdmin));
         userService.add(admin);
     }
