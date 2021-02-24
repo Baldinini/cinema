@@ -1,4 +1,4 @@
-# **Cinema Shop**
+# **Cinema Shop** #
 
 A prototype of an online cinema store with basic functionality for users and admins written in Java.
 
@@ -7,7 +7,7 @@ A prototype of an online cinema store with basic functionality for users and adm
 In this project used N-tier architecture with DB layer, DAO layer, Service layer, Controllers layer.
 Project was developed according to SOLID principles with authorization and authentication.
 
-![img.png](img.png)
+![img.png?raw=true](img.png)
 
 _No role:_
 
@@ -46,9 +46,9 @@ _Admin:_
 
 **Running the Project**
 
-1. Download and install the [JDK]( https://www.oracle.com/ru/java/technologies/javase-downloads.html)
-2. Download and install servlet container (for example [Apache Tomcat](https://tomcat.apache.org/download-90.cgi,))
-3. Download and install [MySQL Server](https://dev.mysql.com/downloads/)
+1. Download and install the [JDK]( https://www.oracle.com/ru/java/technologies/javase-downloads.html).
+2. Download and install servlet container (for example [Apache Tomcat](https://tomcat.apache.org/download-90.cgi,)).
+3. Download and install [MySQL Server](https://dev.mysql.com/downloads/).
 4. Find file _db.properties_ in resources and change the parameters to yours:
    + url: jdbc:mysql://"host name":"port"/"name db"?serverTimezone=UTC
    + username: "username"
@@ -57,7 +57,8 @@ _Admin:_
 
 **Be careful:**
 The admin is created by default. If you want to change parameters for him should do the following: 
-1. open _db.properties_ 
+1. open _db.properties_ in resources
 2. change parameters to yours:
    + admin.email: "email"
    + admin.password: "password"
+
